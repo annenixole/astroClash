@@ -9,6 +9,9 @@ import pinkastro from '../assets/Pink Astro Display.png';
 import redastro from '../assets/Red Astro Display.png';
 import yellowastro from '../assets/Yellow Astro Display.png';
 import alien from '../assets/alien.png';
+import developerAnne from '../assets/Nicole.png';
+import developerBianca from '../assets/Nhorwie (2).png';
+import developerRailey from '../assets/pael (2).png';
 
 export default function LandingPage() {
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
@@ -54,6 +57,15 @@ export default function LandingPage() {
 
   const handleCloseTrailer = () => {
     setIsTrailerOpen(false);
+  };
+
+  const handleAndroidDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/Astro Clash.apk';
+    link.download = 'Astro Clash.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -239,15 +251,29 @@ export default function LandingPage() {
             {/* Game Credits */}
             <div className="game-credits">
               <h3>Game Developers</h3>
-              <p className="credit-item">
-                <span className="credit-label">Group Leader: </span>Anne Nicole Hallegado
-              </p>
-              <p className="credit-item">
-                <span className="credit-label">Assistant Graphic Designer & Animator: </span>  Nhorwie Bianca Mangalile
-              </p>
-              <p className="credit-item">
-                <span className="credit-label">Assistant Developer & Sound Designer: </span>  John Railey Pael
-              </p>
+              <div className="developer-cards">
+                <div className="developer-card">
+                  <div className="developer-image-wrapper">
+                    <img src={developerAnne} alt="Anne Nicole Hallegado" className="developer-image" />
+                  </div>
+                  <p className="developer-role">Group Leader</p>
+                  <p className="developer-name">Anne Nicole Hallegado</p>
+                </div>
+                <div className="developer-card">
+                  <div className="developer-image-wrapper">
+                    <img src={developerBianca} alt="Nhorwie Bianca Mangalile" className="developer-image" />
+                  </div>
+                  <p className="developer-role">Graphic Designer & Animator</p>
+                  <p className="developer-name">Nhorwie Bianca Mangalile</p>
+                </div>
+                <div className="developer-card">
+                  <div className="developer-image-wrapper">
+                    <img src={developerRailey} alt="John Railey Pael" className="developer-image" />
+                  </div>
+                  <p className="developer-role">Developer & Sound Designer</p>
+                  <p className="developer-name">John Railey Pael</p>
+                </div>
+              </div>
             </div>
 
             {/* Available On */}
@@ -255,7 +281,7 @@ export default function LandingPage() {
               <h3>Available On</h3>
               <div className="platform-buttons">
                 <button className="platform-btn android">Android Devices</button>
-                <button className="platform-btn unity">Unity</button>
+                <button className="platform-btn unity">Windows PC</button>
               </div>
             </div>
 
@@ -272,7 +298,7 @@ export default function LandingPage() {
           <h2 className="download-title">Ready to Join the Battle?</h2>
           <p className="download-subtitle">Download Astro Clash now and start your space clash with friends!</p>
           <div className="download-buttons">
-            <button className="download-btn android-download">Download for Android</button>
+            <button className="download-btn android-download" onClick={handleAndroidDownload}>Download for Android</button>
           </div>
         </div>
       </section>
@@ -295,6 +321,30 @@ export default function LandingPage() {
           </div>
         </div>
       )}
+
+      {/* Footer */}
+      <footer className="footer-section">
+        <div className="footer-container">
+          <div className="footer-content">
+            <div className="footer-col">
+              <h4>Astro <span className="clash-text">Clash</span></h4>
+              <p>A 2D multiplayer survival game where only one can escape. Fight, strategize, and survive!</p>
+            </div>
+            <div className="footer-col">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); scrollToHero(); }}>Home</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToAbout(); }}>About</a></li>
+                <li><a href="#gameplay" onClick={(e) => { e.preventDefault(); scrollToExperience(); }}>Gameplay</a></li>
+                <li><a href="#download" onClick={(e) => { e.preventDefault(); scrollToDownload(); }}>Download</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2026 Astro Clash. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
