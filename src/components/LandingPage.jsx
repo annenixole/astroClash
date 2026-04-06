@@ -60,7 +60,13 @@ export default function LandingPage() {
   };
 
   const handleAndroidDownload = () => {
-    window.open('https://github.com/annenixole/astroClash/releases/latest/download/Astro.Clash.apk', '_blank');
+    const link = document.createElement('a');
+    link.href = 'https://github.com/annenixole/astroClash/releases/download/v1.0.0/Astro.Clash.apk';
+    link.download = 'Astro.Clash.apk';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
