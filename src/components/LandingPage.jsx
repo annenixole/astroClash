@@ -12,15 +12,28 @@ import alien from '../assets/alien.png';
 import developerAnne from '../assets/Nicole.png';
 import developerBianca from '../assets/Nhorwie (2).png';
 import developerRailey from '../assets/pael (2).png';
+import tutorial1 from '../assets/Gametutorial/1.png';
+import tutorial2 from '../assets/Gametutorial/2.png';
+import tutorial3 from '../assets/Gametutorial/3.png';
+import tutorial4 from '../assets/Gametutorial/4.png';
+import tutorial5 from '../assets/Gametutorial/5.png';
+import tutorial6 from '../assets/Gametutorial/6.png';
+import tutorial7 from '../assets/Gametutorial/7.png';
+import tutorial8 from '../assets/Gametutorial/8.png';
+import tutorial9 from '../assets/Gametutorial/9.png';
 
 export default function LandingPage() {
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const heroSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
   const experienceSectionRef = useRef(null);
   const gameInfoSectionRef = useRef(null);
   const downloadSectionRef = useRef(null);
+
+  const tutorialImages = [tutorial1, tutorial2, tutorial3, tutorial4, tutorial5, tutorial6, tutorial7, tutorial8, tutorial9];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,8 +72,28 @@ export default function LandingPage() {
     setIsTrailerOpen(false);
   };
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % tutorialImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + tutorialImages.length) % tutorialImages.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   const handleAndroidDownload = () => {
-    window.location.href = 'https://github.com/annenixole/astroClash/releases/download/v1.0.0/Astro.Clash.apk';
+    window.location.href = 'https://github.com/annenixole/astroClash/releases/download/v1.0.0/Astroclash.apk';
   };
 
   return (
@@ -71,19 +104,26 @@ export default function LandingPage() {
           {/* Logo */}
           <img src={logo} alt="Astro Clash Logo" className="logo-image" />
 
+          {/* Hamburger Menu Button */}
+          <button className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+
           {/* Menu Items */}
-          <ul className="nav-menu">
+          <ul className={`nav-menu ${isMenuOpen ? 'open' : ''}`}>
             <li className="nav-item">
-              <a href="#home" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToHero(); }}>Home</a>
+              <a href="#home" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToHero(); closeMenu(); }}>Home</a>
             </li>
             <li className="nav-item">
-              <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToAbout(); }}>About</a>
+              <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToAbout(); closeMenu(); }}>About</a>
             </li>
             <li className="nav-item">
-              <a href="#gameplay" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToExperience(); }}>Gameplay</a>
+              <a href="#gameplay" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToExperience(); closeMenu(); }}>Gameplay</a>
             </li>
             <li className="nav-item">
-              <a href="#download" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToDownload(); }}>Download</a>
+              <a href="#download" className="nav-link" onClick={(e) => { e.preventDefault(); scrollToDownload(); closeMenu(); }}>Download</a>
             </li>
           </ul>
         </div>
@@ -145,7 +185,7 @@ export default function LandingPage() {
               <p>
                 Astro Clash is a 2D top-down multiplayer survival game set inside a collapsing space station. After a sudden alien attack, the station is thrown into chaos and enters emergency lockdown. Astronauts must compete against each other to collect four scattered keys, activate the central generator, and escape using a single-person escape pod.              </p>
               <p>
-                Players explore the station, gather weapons and tools, and engage in combat while sabotaging rivals. Along the way, they must survive dangerous hazards such as anomaly zones, system failures, and hostile alien entities.              </p>
+                Players explore the station, acquire weapons, and engage in combat with other ASTRO. Along the way, they must avoid dangerous hazards such as anomaly zones and alien entities. </p>
               <p>
                 Only one player can escape. Victory goes to the astronaut who activates the escape sequence and escapes first.
               </p>
@@ -178,6 +218,56 @@ export default function LandingPage() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Game Tutorial Slider Section */}
+      <section className="tutorial-section">
+        <div className="tutorial-container">
+          <h2 className="tutorial-title">
+            GAME <span className="tutorial-text">TUTORIAL</span>
+          </h2>
+          <p className="tutorial-subtitle">
+            Your Guide to survive and escape the station.
+          </p>
+
+          {/* Slider */}
+          <div className="slider-wrapper">
+            <div className="slider-container">
+              <div className="slides">
+                {tutorialImages.map((img, index) => (
+                  <div
+                    key={index}
+                    className={`slide ${index === currentSlide ? 'active' : ''}`}
+                  >
+                    <img src={img} alt={`Tutorial ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Previous Button */}
+              <button className="slider-btn prev-btn" onClick={prevSlide}>
+                ❮
+              </button>
+
+              {/* Next Button */}
+              <button className="slider-btn next-btn" onClick={nextSlide}>
+                ❯
+              </button>
+            </div>
+
+            {/* Dots/Indicators */}
+            <div className="slider-dots">
+              {tutorialImages.map((_, index) => (
+                <button
+                  key={index}
+                  className={`dot ${index === currentSlide ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
